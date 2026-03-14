@@ -1,19 +1,5 @@
-use std::sync::Mutex;
-
-const DIMENSION_X : usize = 9;
-const DIMENSION_Y : usize = 9;
-
-static GAME_AREA: Mutex<[[u8; DIMENSION_X]; DIMENSION_Y]> = Mutex::new([
-    [0,0,0,0,1,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0],
-    [0,0,6,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0],
-    [2,0,0,0,0,9,0,0,4],
-    [0,0,9,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,3,0,0,0,0],
-]);
+const DIMENSION_X: usize = 9;
+const DIMENSION_Y: usize = 9;
 
 fn get_valid_positions(board: &[[u8; DIMENSION_X]; DIMENSION_Y], x: usize, y: usize) -> Vec<u8> {
     let mut solutions = vec![1,2,3,4,5,6,7,8,9];
@@ -93,10 +79,20 @@ fn print_area(board: &[[u8; DIMENSION_X]; DIMENSION_Y]) {
     }
 }
 
-
 fn main() {
+    let mut board = [
+        [0,0,0,0,1,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,6,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,9,0,0,4],
+        [0,0,9,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,3,0,0,0,0],
+    ];
+
     println!("Hello, world!");
-    let mut board = GAME_AREA.lock().unwrap();
     if solve(&mut board, 0, 0) {
         println!("Solution found:");
         print_area(&board);
