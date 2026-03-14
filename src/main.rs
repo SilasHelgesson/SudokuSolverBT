@@ -73,13 +73,11 @@ fn solve(board: &mut [[u8; DIMENSION_X]; DIMENSION_Y],x: usize, y: usize) -> boo
 
 fn print_area(board: &[[u8; DIMENSION_X]; DIMENSION_Y]) {
     for y in 0..DIMENSION_Y {
-
         if y % 3 == 0 && y != 0 {
             println!("------+-------+------");
         }
 
         for x in 0..DIMENSION_X {
-
             if x % 3 == 0 && x != 0 {
                 print!("| ");
             }
