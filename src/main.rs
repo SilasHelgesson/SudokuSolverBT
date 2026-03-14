@@ -8,8 +8,8 @@ static GAME_AREA: Mutex<[[u8; DIMENSION_X]; DIMENSION_Y]> = Mutex::new([
     [0,0,0,0,0,0,0,0,0],
     [0,0,6,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
-    [2,0,0,0,0,0,0,0,4],
-    [0,0,0,0,0,0,0,0,0],
+    [2,0,0,0,0,9,0,0,4],
+    [0,0,9,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
     [0,0,0,0,3,0,0,0,0],
@@ -97,8 +97,10 @@ fn print_area(board: &[[u8; DIMENSION_X]; DIMENSION_Y]) {
 fn main() {
     println!("Hello, world!");
     let mut board = GAME_AREA.lock().unwrap();
-    print_area(&board);
-    println!("Looking for a solution...");
-    solve(&mut board,0,0);
-    print_area(&board);
+    if solve(&mut board, 0, 0) {
+        println!("Solution found:");
+        print_area(&board);
+    } else {
+        println!("No solution exists.");
+    }
 }
