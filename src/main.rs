@@ -50,20 +50,20 @@ fn get_valid_positions(board: &[[u8; DIMENSION_X]; DIMENSION_Y], x: usize, y: us
     solutions
 }
 
-fn find_valid_solution(board: &mut [[u8; DIMENSION_X]; DIMENSION_Y],x: usize, y: usize) -> bool {
+fn solve(board: &mut [[u8; DIMENSION_X]; DIMENSION_Y],x: usize, y: usize) -> bool {
     if x == DIMENSION_X {
-        return find_valid_solution(board,0,y+1);
+        return solve(board,0,y+1);
     }
     if y == DIMENSION_Y {
         return true;
     }
     if board[y][x] != 0 {
-        return find_valid_solution(board,x+1,y);
+        return solve(board,x+1,y);
     }
     let placements = get_valid_positions(&board,x,y);
     for placement in placements {
         board[y][x] = placement;
-        if find_valid_solution(board,x+1,y) {
+        if solve(board,x+1,y) {
             return true;
         }
     }
@@ -73,9 +73,24 @@ fn find_valid_solution(board: &mut [[u8; DIMENSION_X]; DIMENSION_Y],x: usize, y:
 
 fn print_area(board: &[[u8; DIMENSION_X]; DIMENSION_Y]) {
     for y in 0..DIMENSION_Y {
-        for x in 0..DIMENSION_X {
-            print!("{}", board[y][x]);
+
+        if y % 3 == 0 && y != 0 {
+            println!("------+-------+------");
         }
+
+        for x in 0..DIMENSION_X {
+
+            if x % 3 == 0 && x != 0 {
+                print!("| ");
+            }
+
+            if board[y][x] == 0 {
+                print!(". ");
+            } else {
+                print!("{} ", board[y][x]);
+            }
+        }
+
         println!();
     }
 }
@@ -86,6 +101,6 @@ fn main() {
     let mut board = GAME_AREA.lock().unwrap();
     print_area(&board);
     println!("Looking for a solution...");
-    find_valid_solution(&mut board,0,0);
+    solve(&mut board,0,0);
     print_area(&board);
 }
